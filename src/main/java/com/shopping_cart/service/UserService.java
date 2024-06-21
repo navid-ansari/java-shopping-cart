@@ -12,40 +12,77 @@ import com.shopping_cart.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
+//@AllArgsConstructor
 @Slf4j
 public class UserService {
 
+    @Autowired
     UserRepository userRepository;
 
     public SignUpResponseDTO onUserSignUp(SignUpRequestDTO signUpRequestDto) {
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode(signUpRequestDto.getPassword());
-        //log.info("Hashed password: {}", hashedPassword);
         signUpRequestDto.setPassword(hashedPassword);
         User user = convertDtoToEntity(signUpRequestDto);
 
-        User userEmailExists = this.userRepository.findUserByEmail(user.getEmail());
+        try {
+            User userEmailExists = this.userRepository.findUserByEmail(user.getEmail());
+            if (userEmailExists != null) { // user email exists
+                throw new UserEmailExistsException("Provided email id already exists");
+            }
+        } catch (UserEmailExistsException e) {
+            throw e;
+        } catch (InternalServerException e) {
+            throw new InternalServerException("Internal server error");
+        }
+
+        try {
+            User userMobileNoExists = this.userRepository.findUserByMobileNo(user.getMobileNo());
+            if (userMobileNoExists != null) { // user mobile no exists
+                throw new UserMobileNoExistsException("Provided mobile no already exists");
+            }
+        } catch (UserMobileNoExistsException e) {
+            throw e;
+        } catch (InternalServerException e) {
+            throw new InternalServerException("Internal server error");
+        }
+
+        try {
+            User response = this.userRepository.save(user);
+            if (response != null && response.getId() != null) {
+                return convertEntityToDto(response);
+            } else {
+                throw new AddNewUserException("Failed to add user");
+            }
+        } catch (AddNewUserException e) {
+            throw e;
+        } catch (InternalServerException e) {
+            throw new InternalServerException("Internal server error");
+        }
+
+
+        /*User userEmailExists = this.userRepository.findUserByEmail(user.getEmail());
         if (userEmailExists != null) { // user email exists
             throw new UserEmailExistsException("Provided email id already exists");
-        }
+        }*/
 
-        User userMobileNoExists = this.userRepository.findUserByMobileNo(user.getMobileNo());
+        /*User userMobileNoExists = this.userRepository.findUserByMobileNo(user.getMobileNo());
         if (userMobileNoExists != null) { // user mobile no exists
             throw new UserMobileNoExistsException("Provided mobile no already exists");
-        }
+        }*/
 
-        User response = this.userRepository.save(user);
+        /*User response = this.userRepository.save(user);
         if (response != null && response.getId() != null) {
             return convertEntityToDto(response);
         } else {
             throw new AddNewUserException("Failed to add user");
-        }
+        }*/
     }
 
     public SignInResponseDTO onUserSignIn(SignInRequestDTO signInRequestDTO) {
@@ -53,43 +90,44 @@ public class UserService {
         SignInResponseDTO signInResponseDTO = new SignInResponseDTO();
         Login login = new Login();
 
-        Boolean isUserNameIsMobileNo = signInRequestDTO.getUsername().matches("[0-9]+");
+        boolean isUserNameIsMobileNo = signInRequestDTO.getUsername().matches("[0-9]+");
 
         User getUserData;
 
         if (isUserNameIsMobileNo) {
             login.setMobileNo(signInRequestDTO.getUsername());
-            //try {
-            getUserData = this.userRepository.findUserByMobileNo(login.getMobileNo());
-            //} catch (Exception e) {
-            //    throw new InternalServerException("Failed to get user data");
-            //}
+            //getUserData = this.userRepository.findUserByMobileNo(login.getMobileNo());
+            try {
+                getUserData = this.userRepository.findUserByMobileNo(login.getMobileNo());
+            } catch (Exception e) {
+                throw new InternalServerException("Internal server error");
+            }
         } else {
             login.setEmail(signInRequestDTO.getUsername());
-            //try {
-            getUserData = this.userRepository.findUserByEmail(login.getEmail());
-            //} catch (Exception e) {
-            //    throw new InternalServerException("Failed to get user data");
-            //}
+            //getUserData = this.userRepository.findUserByEmail(login.getEmail());
+            try {
+                getUserData = this.userRepository.findUserByEmail(login.getEmail());
+            } catch (Exception e) {
+                throw new InternalServerException("Internal server error");
+            }
+
         }
         
-
         if (getUserData == null) {
             throw new UserNotFoundException("User not found");
         }
 
-        if (getUserData != null) {
-            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            Boolean isPasswordMatch = encoder.matches(login.getPassword(), getUserData.getPassword());
+        login.setPassword(signInRequestDTO.getPassword());
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        boolean isPasswordMatch = encoder.matches(login.getPassword(), getUserData.getPassword());
 
-            if (isPasswordMatch) {
-                signInResponseDTO.setId(getUserData.getId());
-                signInResponseDTO.setMobileNo(getUserData.getMobileNo());
-                signInResponseDTO.setEmail(getUserData.getEmail());
-                signInResponseDTO.setEmail(getUserData.getEmail());
-            } else {
-                throw new PasswordNotMatchingException("Password not matching");
-            }
+        if (isPasswordMatch) {
+            signInResponseDTO.setId(getUserData.getId());
+            signInResponseDTO.setMobileNo(getUserData.getMobileNo());
+            signInResponseDTO.setEmail(getUserData.getEmail());
+            signInResponseDTO.setEmail(getUserData.getEmail());
+        } else {
+            throw new PasswordNotMatchingException("Password not matching");
         }
         return signInResponseDTO;
     }

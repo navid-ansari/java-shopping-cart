@@ -1,6 +1,7 @@
 package com.shopping_cart.dto.signin;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.Builder;
 import lombok.Data;
 
 @Data

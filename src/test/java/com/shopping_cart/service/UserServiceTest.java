@@ -11,32 +11,27 @@ import com.shopping_cart.exception.custom.user.UserMobileNoExistsException;
 import com.shopping_cart.exception.custom.user.UserNotFoundException;
 import com.shopping_cart.model.User;
 import com.shopping_cart.repository.UserRepository;
-import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-//@AllArgsConstructor
-@DisplayName("User service")
-public class UserServiceTest {
+@DisplayName("Sign in")
+class UserServiceTest {
 
     @MockBean
     UserRepository userRepository;
 
     @Autowired
-    private UserService userService;
+    UserService userService;
 
     /* Success scenarios*/
     @Test
@@ -54,7 +49,7 @@ public class UserServiceTest {
         // mock repository call
         when(userRepository.findUserByEmail(Mockito.anyString())).thenReturn(null);
         when(userRepository.findUserByMobileNo(Mockito.anyString())).thenReturn(null);
-        when(userRepository.save(any(User.class))).thenReturn(user);
+        when(userRepository.save(Mockito.any(User.class))).thenReturn(user);
 
         // set request values in dto
         SignUpRequestDTO signUpRequestDTO = new SignUpRequestDTO();
@@ -78,21 +73,16 @@ public class UserServiceTest {
 
     @Test
     @DisplayName("User sign in: status 200: user log in with mobile no")
-    void onUserSignInWithMobileNo() {
+    void onUserSignInByMobileNo() {
 
         SignInRequestDTO signInRequestDTO = new SignInRequestDTO();
         signInRequestDTO.setUsername("9028894924");
         signInRequestDTO.setPassword("john");
 
-        User user = User.builder()
-                .id("6655fc68f5a6fe52093f1704")
-                .mobileNo("9028894922")
-                .email("john2@gmail.com")
-                .password("$2a$10$Wa87iGQ1tHRzeQtC2rZ9U.fX8.9KeWSM981a.1LznyxDdsQFprMB6")
-                .build();
+        User user = User.builder().id("6655fc68f5a6fe52093f1704").mobileNo("9822868686").email("john@gmail.com").password("$2a$10$Wa87iGQ1tHRzeQtC2rZ9U.fX8.9KeWSM981a.1LznyxDdsQFprMB6").build();
 
         // mock repository call
-        when(userRepository.getUserByMobileNo(Mockito.anyString())).thenReturn(user);
+        when(userRepository.findUserByMobileNo(Mockito.anyString())).thenReturn(user);
 
         // call service method
         SignInResponseDTO response = userService.onUserSignIn(signInRequestDTO);
@@ -101,23 +91,22 @@ public class UserServiceTest {
         assertThat(response.getId()).isNotNull();
         assertEquals(user.getMobileNo(), response.getMobileNo());
         assertEquals(user.getEmail(), response.getEmail());
+
     }
 
     @Test
     @DisplayName("User sign in: status 200: user log in with email")
-    void onUserSignInWithEmail() {
-        SignInRequestDTO signInRequestDTO = new SignInRequestDTO();
-        signInRequestDTO.setUsername("john@gmail.com");
-        signInRequestDTO.setPassword("john");
+    void onUserSignInByEmail() {
 
-        User user = new User();
-        user.setId("6655fc68f5a6fe52093f1704");
-        user.setMobileNo("9028894922");
-        user.setEmail("john@gmail.com");
-        user.setPassword("$2a$10$Wa87iGQ1tHRzeQtC2rZ9U.fX8.9KeWSM981a.1LznyxDdsQFprMB6");
+        User user = User.builder().id("6655fc68f5a6fe52093f1704").mobileNo("9028894922").email("john@gmail.com").password("$2a$10$Wa87iGQ1tHRzeQtC2rZ9U.fX8.9KeWSM981a.1LznyxDdsQFprMB6").build();
 
         // mock repository call
-        when(userRepository.getUserByEmail(Mockito.anyString())).thenReturn(user);
+        when(userRepository.findUserByEmail(Mockito.anyString())).thenReturn(user);
+
+        SignInRequestDTO signInRequestDTO = new SignInRequestDTO();
+
+        signInRequestDTO.setUsername("john@gmail.com");
+        signInRequestDTO.setPassword("john");
 
         // call service method
         SignInResponseDTO response = userService.onUserSignIn(signInRequestDTO);
@@ -194,7 +183,7 @@ public class UserServiceTest {
         // mock repo methods
         when(userRepository.findUserByEmail(Mockito.anyString())).thenReturn(null);
         when(userRepository.findUserByMobileNo(Mockito.anyString())).thenReturn(null);
-        when(userRepository.save(any(User.class))).thenReturn(null);
+        when(userRepository.save(Mockito.any(User.class))).thenReturn(null);
 
         // set request values in dto
         SignUpRequestDTO signUpRequestDTO = new SignUpRequestDTO();
@@ -256,14 +245,14 @@ public class UserServiceTest {
         signInRequestDTO.setPassword("john");
 
         // mock repository call
-        when(userRepository.findUserByMobileNo(Mockito.anyString())).thenThrow(new InternalServerException("Failed to get user data"));
+        when(userRepository.findUserByMobileNo(Mockito.anyString())).thenThrow(new InternalServerException("Internal server error"));
 
         // call service method
         Exception exception = assertThrows(InternalServerException.class,
                 () -> userService.onUserSignIn(signInRequestDTO));
 
         // assertion
-        assertEquals("Failed to get user data", exception.getMessage());
+        assertEquals("Internal server error", exception.getMessage());
     }
 
     @Test
@@ -274,13 +263,13 @@ public class UserServiceTest {
         signInRequestDTO.setPassword("john");
 
         // mock repository call
-        when(userRepository.findUserByEmail(Mockito.anyString())).thenThrow(new InternalServerException("Failed to get user data"));
+        when(userRepository.findUserByEmail(Mockito.anyString())).thenThrow(new InternalServerException("Internal server error"));
 
         // call service method
         Exception exception = assertThrows(InternalServerException.class,
                 () -> userService.onUserSignIn(signInRequestDTO));
 
         // assertion
-        assertEquals("Failed to get user data", exception.getMessage());
+        assertEquals("Internal server error", exception.getMessage());
     }
 }
