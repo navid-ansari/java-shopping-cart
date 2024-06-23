@@ -1,0 +1,517 @@
+{
+	"info": {
+		"_postman_id": "22121e60-ea9c-4279-af34-a7d0e2f46f5d",
+		"name": "Java Shopping Cart",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26045883"
+	},
+	"item": [
+		{
+			"name": "shopping-cart",
+			"item": [
+				{
+					"name": "exception",
+					"item": [
+						{
+							"name": "product not found",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/v1/api/product/6655fc68f5a6fe52093f1700",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"api",
+										"product",
+										"6655fc68f5a6fe52093f1700"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add new product failed",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Air filter\",\n    \"title\": \"Honda CB Trigger air filter\",\n    \"price\": 159,\n    \"description\": \"Air filter for Honda CB Trigger 150\",\n    \"category\": \"Auto part\",\n    \"image\": \"www.somecloudhost/imagefolder/imageid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/v1/api/add-product",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"api",
+										"add-product"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "user email exists",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"mobileNo\": 9028894924,\n    \"email\": \"johnn@gmail.com\",\n    \"password\": \"john\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/v1/api/signup",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"api",
+										"signup"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "req body validation",
+					"item": [
+						{
+							"name": "sign up",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"mobileNo\": \"902889492a\",\n    \"email\": \"john@gmail\",\n    \"password\": \"\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/v1/api/signup",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"api",
+										"signup"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add product",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"navid123\",\n    \"title\": \"Honda CB Trigger air filter\",\n    \"price\": \"123\",\n    \"description\": \"Air filter for Honda CB Trigger 150\",\n    \"category\": \"Auto part\",\n    \"image\": \"www.somecloudhost/imagefolder/imageid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/v1/api/add-product",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"api",
+										"add-product"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get request",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/v1/api/product/6655fc68f5a6fe52093f1704",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"api",
+										"product",
+										"6655fc68f5a6fe52093f1704"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "sign in by email",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"john6@gmail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/v1/api/signin",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"api",
+										"signin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "sign in by mobile no",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"9028894926\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/v1/api/signin",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"api",
+										"signin"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Donuts",
+					"item": [
+						{
+							"name": "get all donuts",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/v1/api/donuts",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"api",
+										"donuts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get donut by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/v1/api/donut/0001",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"api",
+										"donut",
+										"0001"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get toppings by donut id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/v1/api/0001/toppings",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"api",
+										"0001",
+										"toppings"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get topping by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/v1/api/0002/topping/5001",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"api",
+										"0002",
+										"topping",
+										"5001"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Product",
+					"item": [
+						{
+							"name": "get product",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/v1/api/product/664da1ffc2e2ec0a4b7ed011",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"api",
+										"product",
+										"664da1ffc2e2ec0a4b7ed011"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all products",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/v1/api/products",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"api",
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add product",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Air filter\",\n    \"title\": \"Honda CB Trigger air filter\",\n    \"price\": 159,\n    \"description\": \"Air filter for Honda CB Trigger 150\",\n    \"category\": \"Auto part\",\n    \"image\": \"www.somecloudhost/imagefolder/imageid\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/v1/api/add-product",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"api",
+										"add-product"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "signup",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"mobileNo\": \"9028894926\",\n    \"email\": \"john6@gmail.com\",\n    \"password\": \"john\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/v1/api/signup",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"api",
+										"signup"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "login by email",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"john6@gmail.com\",\n    \"password\": \"john\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/v1/api/signin",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"api",
+										"signin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "login by mobile no",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"john6@gmail.com\",\n    \"password\": \"john\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/v1/api/signin",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"api",
+										"signin"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "healthcheck",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/v1/api/healthcheck",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"api",
+								"healthcheck"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
