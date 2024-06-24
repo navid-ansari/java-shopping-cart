@@ -2,6 +2,9 @@ package com.shopping_cart.exception.custom;
 
 import com.shopping_cart.exception.custom.common.InternalServerException;
 import com.shopping_cart.exception.custom.common.UrlNotFoundException;
+import com.shopping_cart.exception.custom.donut.DonutNotFoundException;
+import com.shopping_cart.exception.custom.donut.ToppingNotAvailableException;
+import com.shopping_cart.exception.custom.donut.ToppingNotFoundException;
 import com.shopping_cart.exception.custom.product.AddNewProductException;
 import com.shopping_cart.exception.custom.product.GetAllProductsException;
 import com.shopping_cart.exception.custom.product.ProductNotFoundException;
@@ -76,4 +79,24 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), ex.getMessage());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
     }
+
+    // donut exception
+    @ExceptionHandler(DonutNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleDonutNotFoundException(DonutNotFoundException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
+    @ExceptionHandler(ToppingNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleToppingNotFoundException(ToppingNotFoundException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
+    @ExceptionHandler(ToppingNotAvailableException.class)
+    public ResponseEntity<ErrorResponse> handleToppingNotAvailableException(ToppingNotAvailableException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
 }
