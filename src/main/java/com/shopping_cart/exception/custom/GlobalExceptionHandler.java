@@ -2,6 +2,7 @@ package com.shopping_cart.exception.custom;
 
 import com.shopping_cart.exception.custom.common.InternalServerException;
 import com.shopping_cart.exception.custom.common.UrlNotFoundException;
+import com.shopping_cart.exception.custom.donut.DonutJsonFileNotFoundException;
 import com.shopping_cart.exception.custom.donut.DonutNotFoundException;
 import com.shopping_cart.exception.custom.donut.ToppingNotAvailableException;
 import com.shopping_cart.exception.custom.donut.ToppingNotFoundException;
@@ -95,6 +96,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ToppingNotAvailableException.class)
     public ResponseEntity<ErrorResponse> handleToppingNotAvailableException(ToppingNotAvailableException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
+    @ExceptionHandler(DonutJsonFileNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleDonutJsonFileNotFoundException(DonutJsonFileNotFoundException ex) {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }

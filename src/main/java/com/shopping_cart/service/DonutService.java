@@ -3,6 +3,7 @@ package com.shopping_cart.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shopping_cart.dto.donut.DonutResponseDTO;
 import com.shopping_cart.dto.donut.ToppingResponseDTO;
+import com.shopping_cart.exception.custom.donut.DonutJsonFileNotFoundException;
 import com.shopping_cart.exception.custom.donut.DonutNotFoundException;
 import com.shopping_cart.exception.custom.donut.ToppingNotFoundException;
 import com.shopping_cart.model.donut.Donut;
@@ -68,10 +69,14 @@ public class DonutService {
     }
 
     File getJsonFile() {
-        File file = new File(
-                Objects.requireNonNull(this.getClass().getClassLoader().getResource("data/donut.json")).getFile()
-        );
-        return file;
+        try {
+            File file = new File(
+                    Objects.requireNonNull(this.getClass().getClassLoader().getResource("data/donut.json")).getFile()
+            );
+            return file;
+        } catch (Exception e) {
+            throw new DonutJsonFileNotFoundException("Donut json file not found");
+        }
     }
 
     List<Donut> getDonutList() throws IOException {
