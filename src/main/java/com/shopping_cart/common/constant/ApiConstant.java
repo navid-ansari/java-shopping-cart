@@ -22,7 +22,7 @@ public enum ApiConstant {
         public static final String SIGNUP = "/signup";
         public static final String SIGNIN = "/signin";
         public static final String DONUTS = "/donuts";
-        public static final String DONUT_BY_ID = "/donut/{id}";
+        public static final String DONUT_BY_ID = "/donut/{donutId}";
         public static final String TOPPINGS_BY_DONUT_ID = "/donut/{donutId}/toppings";
         public static final String TOPPING_BY_ID = "/donut/{donutId}/topping/{toppingId}";
     }

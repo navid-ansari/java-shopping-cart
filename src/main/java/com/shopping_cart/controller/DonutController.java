@@ -30,8 +30,8 @@ public class DonutController {
     }
 
     @GetMapping(ApiConstant.Names.DONUT_BY_ID)
-    public ResponseEntity<DonutResponseDTO> onGetDonutById(@PathVariable("id") String id) throws IOException {
-        DonutResponseDTO donut = this.donutService.getDonutById(id);
+    public ResponseEntity<DonutResponseDTO> onGetDonutById(@PathVariable("donutId") String donutId) throws IOException {
+        DonutResponseDTO donut = this.donutService.getDonutById(donutId);
         return new ResponseEntity<>(donut, HttpStatus.OK);
     }
 
@@ -43,7 +43,7 @@ public class DonutController {
 
     @GetMapping(ApiConstant.Names.TOPPING_BY_ID)
     public ResponseEntity<ToppingResponseDTO> onGetToppingsById(@PathVariable("donutId") String donutId, @PathVariable("toppingId") String toppingId) throws IOException {
-        ToppingResponseDTO topping =  this.donutService.getToppingById(donutId, toppingId);
+        ToppingResponseDTO topping = this.donutService.getToppingById(donutId, toppingId);
         return new ResponseEntity<>(topping, HttpStatus.OK);
     }
 }

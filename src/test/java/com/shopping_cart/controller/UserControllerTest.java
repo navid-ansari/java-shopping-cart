@@ -227,7 +227,7 @@ public class UserControllerTest {
     @DisplayName("User sign up: status 400: bad request")
     void onUserSignUpRequestBodyValidation() throws Exception {
 
-        List<String> errors = Arrays.asList("The Mobile number is required","The email id is required","The Password is required");
+        List<String> errors = Arrays.asList("The Mobile number is required", "The email id is required", "The Password is required");
 
         // set request values in dto
         SignUpRequestDTO signUpRequestDTO = new SignUpRequestDTO();
@@ -245,4 +245,13 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.errors", hasItem("The email id is required")))
                 .andExpect(jsonPath("$.errors", hasItem("The Password is required")));
     }
+        /*
+    .andExpect(jsonPath("$.violations", hasSize(3)))
+    .andExpect(jsonPath("$.violations", containsInAnyOrder(
+            Map.of("field", "name", "message", "must not be empty"),
+            Map.of("field", "email", "message", "must not be empty"),
+            Map.of("field", "birthdate", "message", "must not be null")
+          )
+))
+     */
 }

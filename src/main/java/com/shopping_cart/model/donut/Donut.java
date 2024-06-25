@@ -1,12 +1,15 @@
 package com.shopping_cart.model.donut;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
-@Data
+@ToString
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
 public class Donut {
     public String id;
     public String type;
