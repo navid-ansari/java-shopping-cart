@@ -35,7 +35,7 @@ class UserServiceTest {
 
     /* Success scenarios*/
     @Test
-    @DisplayName("User sign up: status 201: created")
+    @DisplayName("User sign up : status 201 : created")
     void onUserSignUp() {
 
         String id = "6655fc68f5a6fe52093f1704";
@@ -72,7 +72,7 @@ class UserServiceTest {
     }
 
     @Test
-    @DisplayName("User sign in: status 200: user log in with mobile no")
+    @DisplayName("User sign in : status 200 : user log in with mobile no")
     void onUserSignInByMobileNo() {
 
         SignInRequestDTO signInRequestDTO = new SignInRequestDTO();
@@ -95,7 +95,7 @@ class UserServiceTest {
     }
 
     @Test
-    @DisplayName("User sign in: status 200: user log in with email")
+    @DisplayName("User sign in : status 200 : user log in with email")
     void onUserSignInByEmail() {
 
         User user = User.builder().id("6655fc68f5a6fe52093f1704").mobileNo("9028894922").email("john@gmail.com").password("$2a$10$Wa87iGQ1tHRzeQtC2rZ9U.fX8.9KeWSM981a.1LznyxDdsQFprMB6").build();
@@ -119,7 +119,7 @@ class UserServiceTest {
 
     /* Exception scenarios*/
     @Test
-    @DisplayName("User sign up: status 409: email exists exception")
+    @DisplayName("User sign up : status 409 : email exists exception")
     void onUserSignUpEmailExistsException() {
 
         String id = "6655fc68f5a6fe52093f1704";
@@ -148,7 +148,7 @@ class UserServiceTest {
     }
 
     @Test
-    @DisplayName("User sign up: status 409: mobile no exists exception")
+    @DisplayName("User sign up : status 409 : mobile no exists exception")
     void onUserSignUpMobileNoExistsException() {
 
         String id = "6655fc68f5a6fe52093f1704";
@@ -177,7 +177,7 @@ class UserServiceTest {
     }
 
     @Test
-    @DisplayName("User sign up: status 500: internal server exception")
+    @DisplayName("User sign up : status 500 : internal server exception")
     void onUserSignUpInternalServerException() {
 
         // mock repo methods
@@ -200,7 +200,7 @@ class UserServiceTest {
     }
 
     @Test
-    @DisplayName("User sign in: status 404: user not found by mobile no")
+    @DisplayName("User sign in : status 404 : user not found by mobile no")
     void onUserSignInByMobileNoNotFoundException() {
 
         SignInRequestDTO signInRequestDTO = new SignInRequestDTO();

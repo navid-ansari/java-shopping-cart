@@ -33,7 +33,7 @@ public class ProductServiceTest {
 
     /* Success scenarios*/
     @Test
-    @DisplayName("Add product: status 201: created")
+    @DisplayName("Add product : status 201 : created")
     void addProduct() {
 
         String id = "6655fc68f5a6fe52093f1704";
@@ -72,7 +72,7 @@ public class ProductServiceTest {
     }
 
     @Test
-    @DisplayName("Get product by id: status 200: get single product")
+    @DisplayName("Get product by id : status 200 : get single product")
     void getProduct() {
 
         String id = "6655fc68f5a6fe52093f1704";
@@ -102,7 +102,7 @@ public class ProductServiceTest {
     }
 
     @Test
-    @DisplayName("Get products: Status 200: get product list")
+    @DisplayName("Get products : Status 200 : get product list")
     void getProducts() {
 
         Product product = new Product();
@@ -131,7 +131,7 @@ public class ProductServiceTest {
 
     /* Exception scenarios*/
     @Test
-    @DisplayName("Add products: Status 500: internal server exception")
+    @DisplayName("Add products : Status 500 : internal server exception")
     void addProductFailedException() {
 
         // mock repository method
@@ -153,7 +153,7 @@ public class ProductServiceTest {
     }
 
     @Test
-    @DisplayName("Get product by id: Status 404: product not found")
+    @DisplayName("Get product by id : Status 404 : product not found")
     void addProductNotFoundException() {
 
         String id = "6655fc68f5a6fe52093f1704";
@@ -177,7 +177,7 @@ public class ProductServiceTest {
     }
 
     @Test
-    @DisplayName("Get products: Status 500: internal server exception")
+    @DisplayName("Get products : Status 500 : internal server exception")
     void getProductsFailedException() {
 
         // mock repository method

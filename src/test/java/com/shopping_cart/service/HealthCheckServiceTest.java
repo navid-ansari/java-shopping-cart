@@ -21,7 +21,7 @@ public class HealthCheckServiceTest {
     HealthCheckService healthCheckService;
 
     @Test
-    @DisplayName("On healthcheck: status 200: get healthcheck")
+    @DisplayName("On healthcheck : status 200 : get healthcheck")
     void getHealthCheck() {
 
         String message = "Healthcheck success";

@@ -41,7 +41,7 @@ public class UserControllerTest {
 
     /* Success scenarios */
     @Test
-    @DisplayName("User sign up: status 201: created")
+    @DisplayName("User sign up : status 201 : created")
     void onUserSignUp() throws Exception {
 
         // set response values in dto
@@ -72,7 +72,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("User sign in by mobile no: status 200: success")
+    @DisplayName("User sign in by mobile no : status 200 : success")
     void onUserSignInByMobileNo() throws Exception {
 
         SignInRequestDTO signInRequestDTO = new SignInRequestDTO();
@@ -98,7 +98,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("User sign in by email: status 200: success")
+    @DisplayName("User sign in by email : status 200 : success")
     void onUserSignInByEmail() throws Exception {
 
         SignInRequestDTO signInRequestDTO = new SignInRequestDTO();
@@ -125,7 +125,7 @@ public class UserControllerTest {
 
     /* Exception scenarios */
     @Test
-    @DisplayName("User sign up: status 409: email exists")
+    @DisplayName("User sign up : status 409 : email exists")
     void onUserSignUpEmailExistException() throws Exception {
 
         // set values in request body dto
@@ -155,7 +155,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("User sign up: status 409: mobile no exists")
+    @DisplayName("User sign up : status 409 : mobile no exists")
     void onUserSignUpMobileNoExistException() throws Exception {
 
         // set values in request body dto
@@ -185,7 +185,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("User sign in by mobile no: status 404: user not found")
+    @DisplayName("User sign in by mobile no : status 404 : user not found")
     void onUserSignInUserNotFoundException() throws Exception {
         SignInRequestDTO signInRequestDTO = new SignInRequestDTO();
         signInRequestDTO.setUsername("9028894921");
@@ -204,7 +204,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("User sign in by mobile no: status 404: user not found")
+    @DisplayName("User sign in by mobile no : status 404 : user not found")
     void onUserSignInPasswordNotMatchingException() throws Exception {
         SignInRequestDTO signInRequestDTO = new SignInRequestDTO();
         signInRequestDTO.setUsername("9028894921");
@@ -224,7 +224,7 @@ public class UserControllerTest {
 
     /* Request body validation */
     @Test
-    @DisplayName("User sign up: status 400: bad request")
+    @DisplayName("User sign up : status 400 : bad request")
     void onUserSignUpRequestBodyValidation() throws Exception {
 
         List<String> errors = Arrays.asList("The Mobile number is required", "The email id is required", "The Password is required");

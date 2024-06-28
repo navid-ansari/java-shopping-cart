@@ -28,7 +28,7 @@ public class HealthCheckControllerTest {
 
     /* Success scenarios */
     @Test
-    @DisplayName("On healthcheck: status 200: get healthcheck")
+    @DisplayName("On healthcheck : status 200 : get healthcheck")
     void onHealthCheck() throws Exception {
 
         // mock service method
@@ -37,13 +37,13 @@ public class HealthCheckControllerTest {
         // perform api call and match response
         this.mockMvc.perform(get("/v1/api/healthcheck"))
                 .andExpect(status().is(200))
-                .andExpect(content().contentType(MediaType.TEXT_PLAIN_VALUE+";charset=UTF-8"))
+                .andExpect(content().contentType(MediaType.TEXT_PLAIN_VALUE + ";charset=UTF-8"))
                 .andExpect(content().string("Healthcheck success"));
     }
 
     /* Exception scenarios */
     @Test
-    @DisplayName("On healthcheck: status 404: not found")
+    @DisplayName("On healthcheck : status 404 : not found")
     void onHealthCheckInvalidUrl() throws Exception {
 
         // perform api call and match response

@@ -35,7 +35,7 @@ public class ProductControllerTest {
 
     /* Success scenarios */
     @Test
-    @DisplayName("Add product: status 201: created")
+    @DisplayName("Add product : status 201 : created")
     void onAddProduct() throws Exception {
 
         // set values in request body dto
@@ -78,7 +78,7 @@ public class ProductControllerTest {
 
     /* Exception scenarios */
     @Test
-    @DisplayName("Add product: status 500: internal server exception")
+    @DisplayName("Add product : status 500 : internal server exception")
     void onAddProductFailException() throws Exception {
 
         ProductRequestDTO productRequestDTO = new ProductRequestDTO();
@@ -105,7 +105,7 @@ public class ProductControllerTest {
 
     /* Request body validation scenarios */
     @Test
-    @DisplayName("Add product: status 400: bad request")
+    @DisplayName("Add product : status 400 : bad request")
     void onAddProductRequestBodyValidation() throws Exception {
 
         // set values in request body dto

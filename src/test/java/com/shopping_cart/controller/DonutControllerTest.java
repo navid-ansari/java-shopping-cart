@@ -49,7 +49,7 @@ public class DonutControllerTest {
                 .topping(List.of(ToppingResponseDTO.builder().id("5002").type("Glazed").build())).build();
 
         // mock service method
-        when(donutService.getAllDonuts()).thenReturn(List.of(donut));
+        when(donutService.allDonuts()).thenReturn(List.of(donut));
 
         // perform api call and match response
         this.mockMvc.perform(get("/v1/api/donuts").contentType(MediaType.APPLICATION_JSON))
@@ -79,7 +79,7 @@ public class DonutControllerTest {
         );
 
         // mock service method
-        when(donutService.getAllDonuts()).thenReturn(donutList);
+        when(donutService.allDonuts()).thenReturn(donutList);
 
         // perform api call and match response
         this.mockMvc.perform(get("/v1/api/donuts").contentType(MediaType.APPLICATION_JSON))
@@ -106,7 +106,7 @@ public class DonutControllerTest {
                 .topping(List.of(ToppingResponseDTO.builder().id("5002").type("Glazed").build())).build();
 
         // mock service method
-        when(donutService.getDonutById(donutId)).thenReturn(donut);
+        when(donutService.donutById(donutId)).thenReturn(donut);
 
         // perform api call and match response
         StringBuilder sb = new StringBuilder();
@@ -134,7 +134,7 @@ public class DonutControllerTest {
         );
 
         // mock service method
-        when(donutService.getToppingsByDonutId(donutId)).thenReturn(toppingList);
+        when(donutService.toppingsByDonutId(donutId)).thenReturn(toppingList);
 
         // perform api call and match response
         String url = (new StringBuilder()).append("/v1/api/donut/").append(donutId).append("/toppings").toString();
@@ -155,7 +155,7 @@ public class DonutControllerTest {
         ToppingResponseDTO topping = ToppingResponseDTO.builder().id("5005").type("Sugar").build();
 
         // mock service method
-        when(donutService.getToppingById(donutId, toppingId)).thenReturn(topping);
+        when(donutService.toppingById(donutId, toppingId)).thenReturn(topping);
 
         // perform api call and match response
         String url = (new StringBuilder()).append("/v1/api/donut/").append(donutId).append("/topping/").append(toppingId).toString();
@@ -174,7 +174,7 @@ public class DonutControllerTest {
         String donutId = "0001";
 
         // mock service method
-        when(donutService.getDonutById(donutId)).thenThrow(new DonutNotFoundException("Donut with id " + donutId + " not found"));
+        when(donutService.donutById(donutId)).thenThrow(new DonutNotFoundException("Donut with id " + donutId + " not found"));
 
         // perform api call and match response
         StringBuilder sb = new StringBuilder();
@@ -192,7 +192,7 @@ public class DonutControllerTest {
         String donutId = "0001";
 
         // mock service method
-        when(donutService.getToppingsByDonutId(donutId)).thenThrow(new DonutNotFoundException("Donut with id " + donutId + " not found"));
+        when(donutService.toppingsByDonutId(donutId)).thenThrow(new DonutNotFoundException("Donut with id " + donutId + " not found"));
 
         // perform api call and match response
         String url = (new StringBuilder()).append("/v1/api/donut/").append(donutId).append("/toppings").toString();
@@ -208,7 +208,7 @@ public class DonutControllerTest {
         String toppingId = "5005";
 
         // mock service method
-        when(donutService.getToppingById(donutId, toppingId)).thenThrow(new DonutNotFoundException("Donut with id " + donutId + " not found"));
+        when(donutService.toppingById(donutId, toppingId)).thenThrow(new DonutNotFoundException("Donut with id " + donutId + " not found"));
 
         // perform api call and match response
         String url = (new StringBuilder()).append("/v1/api/donut/").append(donutId).append("/topping/").append(toppingId).toString();
@@ -224,7 +224,7 @@ public class DonutControllerTest {
         String toppingId = "5005";
 
         // mock service method
-        when(donutService.getToppingById(donutId, toppingId)).thenThrow(new ToppingNotFoundException("Topping with id " + toppingId + " not found"));
+        when(donutService.toppingById(donutId, toppingId)).thenThrow(new ToppingNotFoundException("Topping with id " + toppingId + " not found"));
 
         // perform api call and match response
         String url = (new StringBuilder()).append("/v1/api/donut/").append(donutId).append("/topping/").append(toppingId).toString();

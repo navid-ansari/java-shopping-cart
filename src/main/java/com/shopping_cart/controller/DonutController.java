@@ -25,25 +25,27 @@ public class DonutController {
 
     @GetMapping(ApiConstant.Names.DONUTS)
     public ResponseEntity<List<DonutResponseDTO>> onGetAllDonuts() throws IOException {
-        List<DonutResponseDTO> donutList = this.donutService.getAllDonuts();
+        //List<DonutResponseDTO> donutList = this.donutService.getAllDonuts();
+        List<DonutResponseDTO> donutList = this.donutService.allDonuts();
         return new ResponseEntity<>(donutList, HttpStatus.OK);
     }
 
     @GetMapping(ApiConstant.Names.DONUT_BY_ID)
     public ResponseEntity<DonutResponseDTO> onGetDonutById(@PathVariable("donutId") String donutId) throws IOException {
-        DonutResponseDTO donut = this.donutService.getDonutById(donutId);
+        ///DonutResponseDTO donut = this.donutService.getDonutById(donutId);
+        DonutResponseDTO donut = this.donutService.donutById(donutId);
         return new ResponseEntity<>(donut, HttpStatus.OK);
     }
 
     @GetMapping(ApiConstant.Names.TOPPINGS_BY_DONUT_ID)
     public ResponseEntity<List<ToppingResponseDTO>> onGetToppingsByDonutId(@PathVariable("donutId") String donutId) throws IOException {
-        List<ToppingResponseDTO> toppingsList = this.donutService.getToppingsByDonutId(donutId);
+        List<ToppingResponseDTO> toppingsList = this.donutService.toppingsByDonutId(donutId);
         return new ResponseEntity<>(toppingsList, HttpStatus.OK);
     }
 
     @GetMapping(ApiConstant.Names.TOPPING_BY_ID)
     public ResponseEntity<ToppingResponseDTO> onGetToppingsById(@PathVariable("donutId") String donutId, @PathVariable("toppingId") String toppingId) throws IOException {
-        ToppingResponseDTO topping = this.donutService.getToppingById(donutId, toppingId);
+        ToppingResponseDTO topping = this.donutService.toppingById(donutId, toppingId);
         return new ResponseEntity<>(topping, HttpStatus.OK);
     }
 }
