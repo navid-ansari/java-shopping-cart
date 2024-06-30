@@ -2,6 +2,8 @@ package com.shopping_cart.service;
 
 import com.shopping_cart.dto.donut.DonutResponseDTO;
 import com.shopping_cart.dto.donut.ToppingResponseDTO;
+import com.shopping_cart.exception.custom.donut.DonutNotFoundException;
+import com.shopping_cart.exception.custom.donut.ToppingNotFoundException;
 import com.shopping_cart.model.donut.Batter;
 import com.shopping_cart.model.donut.Batters;
 import com.shopping_cart.model.donut.Donut;
@@ -16,8 +18,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -31,6 +32,7 @@ public class DonutServiceTest {
     @MockBean
     DonutRepository donutRepository;
 
+    /* Success scenarios */
     @Test
     @Order(1)
     @DisplayName("Get all Donuts : status 200 : success")
@@ -159,5 +161,111 @@ public class DonutServiceTest {
 
         assertEquals(donutList.get(0).getTopping().get(0).getId(), response.getId());
         assertEquals(donutList.get(0).getTopping().get(0).getType(), response.getType());
+    }
+
+    /* Exception scenarios*/
+    @Test
+    @Order(5)
+    @DisplayName("Get Donut by id : status 404 : Donut not found")
+    public void donutByIdDonutNotFoundException() throws IOException {
+        String donutId = "0002";
+
+        Donut donut = Donut.builder().id("0001").type("donut").name("Cake").ppu(0.55)
+                .batters(Batters.builder().batter(List.of(Batter.builder().id("1001").type("Regular").build())).build())
+                .topping(List.of(Topping.builder().id("5002").type("Glazed").build())).build();
+
+        List<Donut> donutList = List.of(
+                donut,
+                Donut.builder().id("0003").type("donut").name("Old Fashioned").ppu(0.55)
+                        .batters(Batters.builder().batter(List.of(Batter.builder().id("1002").type("Chocolate").build())).build())
+                        .topping(List.of(Topping.builder().id("5004").type("Maple").build())).build());
+
+        // mock repository
+        when(donutRepository.getAllDonuts()).thenReturn(donutList);
+
+        // call service method
+        Exception exception = assertThrows(DonutNotFoundException.class, () ->
+                donutService.donutById(donutId));
+
+        assertEquals("Donut with id " + donutId + " not found", exception.getMessage());
+    }
+
+    @Test
+    @Order(6)
+    @DisplayName("Get Toppings by Donut id")
+    public void toppingsByDonutIdDonutNotFoundException() throws IOException {
+        String donutId = "0002";
+        Donut donut = Donut.builder().id("0001").type("donut").name("Cake").ppu(0.55)
+                .batters(Batters.builder().batter(List.of(Batter.builder().id("1001").type("Regular").build())).build())
+                .topping(List.of(Topping.builder().id("5002").type("Glazed").build())).build();
+
+        List<Donut> donutList = List.of(
+                donut,
+                Donut.builder().id("0003").type("donut").name("Old Fashioned").ppu(0.55)
+                        .batters(Batters.builder().batter(List.of(Batter.builder().id("1002").type("Chocolate").build())).build())
+                        .topping(List.of(Topping.builder().id("5004").type("Maple").build())).build());
+
+        // mock repository
+        when(donutRepository.getAllDonuts()).thenReturn(donutList);
+
+        // call service method
+        Exception exception = assertThrows(DonutNotFoundException.class, () ->
+                donutService.toppingsByDonutId(donutId));
+
+        assertEquals("Donut with id " + donutId + " not found", exception.getMessage());
+    }
+
+    @Test
+    @Order(8)
+    @DisplayName("Get Topping by id")
+    public void toppingByIdDonutNotFoundException() throws IOException {
+        String donutId = "0002";
+        String toppingId = "0001";
+
+        Donut donut = Donut.builder().id("0001").type("donut").name("Cake").ppu(0.55)
+                .batters(Batters.builder().batter(List.of(Batter.builder().id("1001").type("Regular").build())).build())
+                .topping(List.of(Topping.builder().id("5002").type("Glazed").build())).build();
+
+        List<Donut> donutList = List.of(
+                donut,
+                Donut.builder().id("0003").type("donut").name("Old Fashioned").ppu(0.55)
+                        .batters(Batters.builder().batter(List.of(Batter.builder().id("1002").type("Chocolate").build())).build())
+                        .topping(List.of(Topping.builder().id("5004").type("Maple").build())).build());
+
+        // mock repository
+        when(donutRepository.getAllDonuts()).thenReturn(donutList);
+
+        // call service method
+        Exception exception = assertThrows(DonutNotFoundException.class, () ->
+                donutService.toppingById(donutId, toppingId));
+
+        assertEquals("Donut with id " + donutId + " not found", exception.getMessage());
+    }
+
+    @Test
+    @Order(9)
+    @DisplayName("Get Topping by id")
+    public void toppingByIdToppingNotFoundException() throws IOException {
+        String donutId = "0001";
+        String toppingId = "5003";
+
+        Donut donut = Donut.builder().id("0001").type("donut").name("Cake").ppu(0.55)
+                .batters(Batters.builder().batter(List.of(Batter.builder().id("1001").type("Regular").build())).build())
+                .topping(List.of(Topping.builder().id("5002").type("Glazed").build())).build();
+
+        List<Donut> donutList = List.of(
+                donut,
+                Donut.builder().id("0003").type("donut").name("Old Fashioned").ppu(0.55)
+                        .batters(Batters.builder().batter(List.of(Batter.builder().id("1002").type("Chocolate").build())).build())
+                        .topping(List.of(Topping.builder().id("5004").type("Maple").build())).build());
+
+        // mock repository
+        when(donutRepository.getAllDonuts()).thenReturn(donutList);
+
+        // call service method
+        Exception exception = assertThrows(ToppingNotFoundException.class, () ->
+                donutService.toppingById(donutId, toppingId));
+
+        assertEquals("Topping with id " + toppingId + " not found", exception.getMessage());
     }
 }
