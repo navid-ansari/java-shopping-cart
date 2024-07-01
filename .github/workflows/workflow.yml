@@ -32,8 +32,9 @@ jobs:
         #run: mvn --batch-mode -DskipTests package
 
       - name: Junit test
-        run: mvn -B test
+        #run: mvn -B test
         #run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
+        run: mvn -B package -Pcoverage
 
       - name: Junit Report
         uses: dorny/test-reporter@v1
@@ -45,34 +46,14 @@ jobs:
           fail-on-error: true
           #list-suites: 'all'
 
-      - name: Upload Report
-        uses: 'actions/upload-artifact@v2'
-        with:
-          name: jacoco-report
-          path: ${{ github.workspace }}/target/site/jacoco/jacoco.xml
-
-      - name: Add coverage to PR
+      - name: Generate Jacoco badge
         id: jacoco
-        uses: madrapps/jacoco-report@v1.2
+        uses: cicirello/jacoco-badge-generator@v2
         with:
-          paths: ${{ github.workspace }}/target/site/jacoco/jacoco.xml
-          token: ${{ secrets.GITHUB_TOKEN }}
-          min-coverage-overall: 80
-          min-coverage-changed-files: 80
-          title: Code Coverage
+          badges-directory: badges
+          generate-branches-badge: true
+          generate-summary: true
 
-      - name: Save Coverage To Environment Variable
-        run: |
-          echo "TOTAL_COVERAGE=${{ steps.jacoco.outputs.coverage-overall }}" >> $GITHUB_ENV
-          echo "CHANGED_FILES_COVERAGE=${{ steps.jacoco.outputs.coverage-changed-files }}" >> $GITHUB_ENV
-
-      - name: Print & Check Coverage Info
-        run: |
-          import os
-          import sys
-          print("Total Coverage: " + str(os.environ["TOTAL_COVERAGE"]))
-          print("Changed Files Coverage: " + str(os.environ["CHANGED_FILES_COVERAGE"]))
-          shell: python
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     #- name: Update dependency graph
