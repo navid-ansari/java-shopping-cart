@@ -54,6 +54,11 @@ jobs:
           generate-branches-badge: true
           generate-summary: true
 
+      - name: Log coverage percentage
+        run:
+          echo "Coverage = ${{steps.jacoco.outputs.coverage}}
+          echo "Branches = ${{steps.jacoco.outputs.branches}}
+
       - name: Generate Jacoco artifact
         #run: mvn clean test
         uses: actions/upload-artifact@v3
