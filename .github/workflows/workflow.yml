@@ -36,7 +36,14 @@ jobs:
         run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
 
       - name: Junit Report
-        run: mvn clean test
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: Maven Tests
+          path: target/surefire-reports/*.xml
+          reporter: java-junit
+          fail-on-error: true
+          #list-suites: 'all'
 
       - name: Add coverage to PR
         id: jacoco
@@ -44,8 +51,7 @@ jobs:
         with:
           paths: |
             ${{ github.workspace }}/**/build/reports/jacoco/prodNormalDebugCoverage/prodNormalDebugCoverage.xml,
-            ${{ github.workspace }}/**/build/reports/jacoco/**/debugCoverage.xml    
-    
+            ${{ github.workspace }}/**/build/reports/jacoco/**/debugCoverage.xml
     
     
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
