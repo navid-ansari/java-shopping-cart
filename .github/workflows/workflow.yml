@@ -32,9 +32,9 @@ jobs:
         #run: mvn --batch-mode -DskipTests package
 
       - name: Junit test
-        #run: mvn -B test
+        run: mvn -B test
         #run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
-        run: mvn -B package -Pcoverage
+        #run: mvn -B package -Pcoverage
 
       - name: Junit Report
         uses: dorny/test-reporter@v1
