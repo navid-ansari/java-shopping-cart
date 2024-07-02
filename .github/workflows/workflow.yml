@@ -54,6 +54,11 @@ jobs:
           generate-branches-badge: true
           generate-summary: true
 
+      - name: Generate JaCoCo Badge with csv
+        uses: cicirello/jacoco-badge-generator@v2
+        with:
+          jacoco-csv-file: target/site/jacoco/jacoco.csv
+
       - name: Generate the badge SVG image
         uses: emibcn/badge-action@v1
         id: badge
