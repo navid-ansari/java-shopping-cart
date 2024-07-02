@@ -27,26 +27,26 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-      - name: Build with Maven
+      - name: Run Maven Build
         run: mvn -B package --file pom.xml
         #run: mvn --batch-mode -DskipTests package
 
-      - name: Junit test
+      - name: Run Junit Test
         run: mvn -B test
         #run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
         #run: mvn -B package -Pcoverage
 
-      - name: Junit Report
+      - name: Generate Junit Report
         uses: dorny/test-reporter@v1
         if: always()
         with:
-          name: Junit Unit Test Report
+          name: Junit Test Report
           path: target/surefire-reports/*.xml
           reporter: java-junit
           fail-on-error: true
           #list-suites: 'all'
 
-      - name: Generate Jacoco badge
+      - name: Generate Jacoco Badge
         id: jacoco
         uses: cicirello/jacoco-badge-generator@v2
         with:
@@ -54,12 +54,12 @@ jobs:
           generate-branches-badge: true
           generate-summary: true
 
-      - name: Log coverage percentage
-        run:
-          echo "Coverage = ${{steps.jacoco.outputs.coverage}}
-          echo "Branches = ${{steps.jacoco.outputs.branches}}
+      #- name: Log coverage percentage
+      #  run:
+      #    echo "Coverage = ${{steps.jacoco.outputs.coverage}}
+      #    echo "Branches = ${{steps.jacoco.outputs.branches}}
 
-      - name: Generate Jacoco artifact
+      - name: Generate Jacoco Artifact
         #run: mvn clean test
         uses: actions/upload-artifact@v3
         with:
