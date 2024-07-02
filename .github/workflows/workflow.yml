@@ -54,6 +54,24 @@ jobs:
           generate-branches-badge: true
           generate-summary: true
 
+      - name: Generate the badge SVG image
+        uses: emibcn/badge-action@v1
+        id: badge
+        with:
+          label: 'Coverage'
+          status: ${{ steps.jacoco.outputs.coverage }}
+          path: ./badges/test-coverage.svg
+          color: ${{
+            steps.jacoco.outputs.coverage > 90 && 'green'              ||
+            steps.jacoco.outputs.coverage > 80 && 'yellow,green'       ||
+            steps.jacoco.outputs.coverage > 70 && 'yellow'             ||
+            steps.jacoco.outputs.coverage > 60 && 'orange,yellow'      ||
+            steps.jacoco.outputs.coverage > 50 && 'orange'             ||
+            steps.jacoco.outputs.coverage > 40 && 'red,orange'         ||
+            steps.jacoco.outputs.coverage > 30 && 'red,red,orange'     ||
+            steps.jacoco.outputs.coverage > 20 && 'red,red,red,orange' ||
+            'red' }}
+
       #- name: Log coverage percentage
       #  run:
       #    echo "Coverage = ${{steps.jacoco.outputs.coverage}}
