@@ -46,13 +46,22 @@ jobs:
           fail-on-error: true
           #list-suites: 'all'
 
-      - name: Generate Jacoco Badge
+      #- name: Generate Jacoco Badge
+      #  id: jacoco
+      #  uses: cicirello/jacoco-badge-generator@v2
+      #  with:
+      #    badges-directory: badges
+      #    generate-branches-badge: true
+      #    generate-summary: true
+
+      - name: Add coverage to PR
         id: jacoco
-        uses: cicirello/jacoco-badge-generator@v2
+        uses: madrapps/jacoco-report@v1.2
         with:
-          badges-directory: badges
-          generate-branches-badge: true
-          generate-summary: true
+          paths: target/site/jacoco/jacoco.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          min-coverage-overall: 40
+          min-coverage-changed-files: 60
 
       #- name: Log coverage percentage
       #  run:
