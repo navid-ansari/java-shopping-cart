@@ -6,14 +6,12 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Builder;
 import lombok.Data;
 
-@Builder(setterPrefix = "with")
 @Data
-@JsonPropertyOrder({"cardDetails", "cardManufacturer"}) // will define the property order in the response
+@Builder(setterPrefix = "with")
+@JsonPropertyOrder({"cardProvider", "enabled"}) // will define the property order in the response
 @JsonInclude(value = JsonInclude.Include.NON_EMPTY) // will remove null values from the response
-public class Card {
-    String cardManufacturer;
-    @JsonProperty("status") // will rename the cardDetails prop name to status in the response
-    ManageMyCards cardDetails;
-
-    String contry;
+public class CardResponseDTO {
+    private String cardProvider;
+    //@JsonProperty("status") // will rename the cardDetails prop name to status in the response
+    private Boolean enabled;
 }
